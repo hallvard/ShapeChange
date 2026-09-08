@@ -23,10 +23,6 @@
 			<artifactId>diff-match-patch-20121119</artifactId>
 		</dependency>
 		<dependency>
-			<groupId>de.interactive_instruments</groupId>
-			<artifactId>ldproxy-cfg</artifactId>
-		</dependency>
-		<dependency>
 			<groupId>org.slf4j</groupId>
 			<artifactId>slf4j-api</artifactId>
 		</dependency>

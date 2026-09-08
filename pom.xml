@@ -44,6 +44,7 @@
 	<modules>
 		<module>shapechange-engine</module>
 		<module>shapechange-core</module>
+		<module>shapechange-ldproxy</module>
 		<module>shapechange-app</module>
 	</modules>
 
