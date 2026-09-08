@@ -29,7 +29,7 @@
  * 53113 Bonn
  * Germany
  */
-package de.interactive_instruments.shapechange.core.sbvr;
+package de.interactive_instruments.shapechange.core.transformation.constraints;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -58,6 +58,9 @@ import de.interactive_instruments.antlr.sbvr.SBVRParser;
 import de.interactive_instruments.shapechange.core.MessageSource;
 import de.interactive_instruments.shapechange.core.Options;
 import de.interactive_instruments.shapechange.core.ShapeChangeResult;
+import de.interactive_instruments.shapechange.core.sbvr.SbvrConstants;
+import de.interactive_instruments.shapechange.core.sbvr.SbvrErrorListener;
+import de.interactive_instruments.shapechange.core.sbvr.SbvrUtil;
 import de.interactive_instruments.shapechange.core.model.ClassInfo;
 import de.interactive_instruments.shapechange.core.model.Constraint;
 import de.interactive_instruments.shapechange.core.model.Model;

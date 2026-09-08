@@ -57,7 +57,8 @@ import java.util.stream.Collectors;
 
 import org.apache.commons.lang3.StringUtils;
 
-import com.google.common.base.Splitter;
+import static de.interactive_instruments.shapechange.core.util.StringUtils.splitToList;
+
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonElement;
@@ -1711,10 +1712,7 @@ public class JsonSchemaDocument implements MessageSource {
 		classByName.put(ci.name(), ci);
 	    }
 
-	    Splitter splitter = Splitter.on(',');
-	    splitter = splitter.omitEmptyStrings();
-	    splitter = splitter.trimResults();
-	    List<String> result = splitter.splitToList(encodingOrderInstructions);
+	    List<String> result = splitToList(encodingOrderInstructions, ",", true, true);
 
 	    for (String eoi : result) {
 		if (classByName.containsKey(eoi)) {

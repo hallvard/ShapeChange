@@ -35,8 +35,7 @@ package de.interactive_instruments.shapechange.core.model;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-
-import org.apache.commons.lang3.ArrayUtils;
+import java.util.stream.Stream;
 
 import de.interactive_instruments.shapechange.core.ocl.OclNode;
 
@@ -169,8 +168,8 @@ public abstract class OclConstraintImpl implements OclConstraint {
 				}
 			}
 
-			this.comments = ArrayUtils.addAll(this.comments,
-					additionalCommentsList.stream().toArray(String[]::new));
+			this.comments = Stream.concat(Arrays.stream(this.comments), additionalCommentsList.stream())
+					.toArray(String[]::new);
 		}
 	}
 }

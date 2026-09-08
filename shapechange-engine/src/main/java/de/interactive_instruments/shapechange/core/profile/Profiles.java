@@ -44,7 +44,7 @@ import java.util.TreeSet;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import org.apache.commons.lang3.StringUtils;
+import de.interactive_instruments.shapechange.core.util.StringUtils;
 
 import de.interactive_instruments.shapechange.core.model.MalformedProfileIdentifierException;
 

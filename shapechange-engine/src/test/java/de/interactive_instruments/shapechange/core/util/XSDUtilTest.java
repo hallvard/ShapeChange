@@ -40,7 +40,6 @@ import java.net.URI;
 import java.nio.file.Path;
 import java.util.Optional;
 
-import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
 
@@ -148,7 +147,9 @@ class XSDUtilTest {
 	Exception exception = assertThrows(ValidationException.class,
 		() -> XSDUtil.validate(u.toString(), handler, Optional.of(scxmlXsdLocation)));
 
-	assert ExceptionUtils.getStackTrace(exception).contains("No XML file found at");
+	StringWriter stackTrace = new StringWriter();
+	exception.printStackTrace(new PrintWriter(stackTrace));
+	assert stackTrace.toString().contains("No XML file found at");
 
 	assert !handler.errorsFound();
 

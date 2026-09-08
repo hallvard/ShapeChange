@@ -45,7 +45,7 @@ import java.util.TreeMap;
 import java.util.TreeSet;
 import java.util.Vector;
 
-import org.apache.commons.lang3.StringUtils;
+import de.interactive_instruments.shapechange.core.util.StringUtils;
 
 import de.interactive_instruments.shapechange.core.MessageSource;
 import de.interactive_instruments.shapechange.core.Options;

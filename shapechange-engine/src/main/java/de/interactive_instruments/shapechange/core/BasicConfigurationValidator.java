@@ -41,9 +41,7 @@ import java.util.Map.Entry;
 import java.util.SortedMap;
 import java.util.SortedSet;
 
-import org.apache.commons.lang3.StringUtils;
-
-import com.google.common.base.Joiner;
+import de.interactive_instruments.shapechange.core.util.StringUtils;
 
 import de.interactive_instruments.shapechange.core.target.TargetOutputProcessor;
 
@@ -154,8 +152,6 @@ public class BasicConfigurationValidator extends AbstractConfigurationValidator 
 
 	    if (applyXslt) {
 
-		Joiner joiner = Joiner.on(", ");
-
 		String pathToXsltDirectory = conf.parameterAsString(TargetOutputProcessor.PARAM_PATH_TO_XSLT_DIRECTORY,
 			".", false, true);
 		String xsltFileName = conf.parameterAsString(TargetOutputProcessor.PARAM_XSLT_FILENAME, null, false,
@@ -163,7 +159,8 @@ public class BasicConfigurationValidator extends AbstractConfigurationValidator 
 
 		if (xsltFileName == null) {
 
-		    result.addProcessFlowError(this, 102, conf.getClassName(), joiner.join(conf.getInputIds()));
+		    result.addProcessFlowError(this, 102, conf.getClassName(),
+			    StringUtils.join(conf.getInputIds(), ", "));
 		    isValid = false;
 
 		} else if (pathToXsltDirectory.toLowerCase().startsWith("http")) {
@@ -173,8 +170,8 @@ public class BasicConfigurationValidator extends AbstractConfigurationValidator 
 			URL url = URI.create(urlString).toURL();
 			url.toURI();
 		    } catch (URISyntaxException | MalformedURLException e) {
-			result.addProcessFlowError(this, 100, conf.getClassName(), joiner.join(conf.getInputIds()),
-				urlString, e.getMessage());
+			result.addProcessFlowError(this, 100, conf.getClassName(),
+				StringUtils.join(conf.getInputIds(), ", "), urlString, e.getMessage());
 			isValid = false;
 		    }
 
@@ -182,8 +179,8 @@ public class BasicConfigurationValidator extends AbstractConfigurationValidator 
 
 		    File xsl = new File(pathToXsltDirectory + "/" + xsltFileName);
 		    if (!xsl.exists()) {
-			result.addProcessFlowError(this, 101, conf.getClassName(), joiner.join(conf.getInputIds()),
-				xsl.getAbsolutePath());
+			result.addProcessFlowError(this, 101, conf.getClassName(),
+				StringUtils.join(conf.getInputIds(), ", "), xsl.getAbsolutePath());
 			isValid = false;
 		    }
 		}

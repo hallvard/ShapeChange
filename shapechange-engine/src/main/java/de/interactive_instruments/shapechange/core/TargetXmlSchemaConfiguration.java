@@ -37,8 +37,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.SortedSet;
 
-import org.apache.commons.collections4.CollectionUtils;
-import org.apache.commons.lang3.StringUtils;
+import de.interactive_instruments.shapechange.core.util.StringUtils;
 import org.w3c.dom.Element;
 
 import de.interactive_instruments.shapechange.core.model.PackageInfo;
@@ -94,7 +93,7 @@ public class TargetXmlSchemaConfiguration extends TargetConfiguration {
 	super(className, processMode, parameters, ruleSets, null, inputIds, null, advancedProcessConfigurations,
 		validatorIds);
 
-	if (CollectionUtils.isNotEmpty(xsdMapEntries)) {
+	if (xsdMapEntries != null && !xsdMapEntries.isEmpty()) {
 	    this.xsdMapEntries = xsdMapEntries;
 	}
 
@@ -104,7 +103,7 @@ public class TargetXmlSchemaConfiguration extends TargetConfiguration {
 	    }
 	}
 
-	if (CollectionUtils.isNotEmpty(xmlNamespaces)) {
+	if (xmlNamespaces != null && !xmlNamespaces.isEmpty()) {
 	    this.xmlNamespaces = xmlNamespaces;
 	}
     }

@@ -40,9 +40,10 @@ import java.util.TreeSet;
 import java.util.regex.Pattern;
 import java.util.regex.PatternSyntaxException;
 
+import org.apache.commons.lang3.StringUtils;
 import org.apache.logging.log4j.util.Strings;
 
-import com.google.common.base.Joiner;
+import static de.interactive_instruments.shapechange.core.util.StringUtils.join;
 
 import de.interactive_instruments.shapechange.core.MessageSource;
 import de.interactive_instruments.shapechange.core.Options;
@@ -63,7 +64,6 @@ import de.interactive_instruments.shapechange.core.target.coretable.CoretableNav
 import de.interactive_instruments.shapechange.core.target.coretable.CoretableNavigableRolesConfigBuilder;
 import de.interactive_instruments.shapechange.core.target.coretable.CoretableNavigableRole.DependentPart;
 import de.interactive_instruments.shapechange.core.transformation.Transformer;
-import shadow.org.apache.commons.lang3.StringUtils;
 
 /**
  * @author Johannes Echterhoff (echterhoff at interactive-instruments dot de)
@@ -290,8 +290,7 @@ public class TaggedValueTransformer implements Transformer, MessageSource {
 	    return;
 	}
 
-	Joiner joiner = Joiner.on(",");
-	String tvsToCopy = joiner.join(tvsToCopyAsList);
+	String tvsToCopy = join(tvsToCopyAsList, ",");
 
 	String typeNameRegexParamValue = trfConfig.parameterAsString(
 		TaggedValueTransformerConstants.PARAM_TV_COPYFROMVALUETYPE_TYPENAMEREGEX, ".*", false, true);

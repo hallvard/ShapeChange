@@ -36,7 +36,7 @@ import java.util.List;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
-import org.apache.commons.lang3.StringUtils;
+import de.interactive_instruments.shapechange.core.util.StringUtils;
 
 import de.interactive_instruments.shapechange.core.ShapeChangeResult.MessageContext;
 

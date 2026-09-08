@@ -42,6 +42,7 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.AbstractMap;
 import java.util.EnumMap;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -61,8 +62,6 @@ import java.util.regex.PatternSyntaxException;
 import java.util.stream.Collectors;
 
 import org.apache.commons.lang3.StringUtils;
-import org.apache.commons.lang3.tuple.ImmutablePair;
-import org.apache.commons.lang3.tuple.Pair;
 import org.docx4j.openpackaging.exceptions.Docx4JException;
 import org.docx4j.openpackaging.packages.WordprocessingMLPackage;
 import org.docx4j.openpackaging.parts.WordprocessingML.MainDocumentPart;
@@ -73,8 +72,9 @@ import org.jgrapht.alg.cycle.TarjanSimpleCycles;
 import org.jgrapht.alg.cycle.TiernanSimpleCycles;
 import org.jgrapht.graph.DirectedMultigraph;
 
-import com.google.common.base.Joiner;
-import com.google.common.base.Splitter;
+import static de.interactive_instruments.shapechange.core.util.StringUtils.join;
+import static de.interactive_instruments.shapechange.core.util.StringUtils.joinSkipNulls;
+import static de.interactive_instruments.shapechange.core.util.StringUtils.splitToList;
 
 import de.interactive_instruments.shapechange.core.MessageSource;
 import de.interactive_instruments.shapechange.core.Multiplicity;
@@ -119,9 +119,6 @@ import de.interactive_instruments.shapechange.core.util.docx.DocxUtil;
  *
  */
 public class Flattener implements Transformer, MessageSource {
-
-    private static final Splitter commaSplitter = Splitter.on(',').omitEmptyStrings().trimResults();
-    private static final Joiner commaJoiner = Joiner.on(",").skipNulls();
 
     /* ------------------------------------------- */
     /* --- configuration parameter identifiers --- */
@@ -1520,7 +1517,6 @@ public class Flattener implements Transformer, MessageSource {
 	 * multiple properties with same name
 	 */
 	boolean resultContainsDuplicatePropertyNames = false;
-	Joiner joiner = Joiner.on(", ");
 
 	for (GenericClassInfo ci : genModel.selectedSchemaClasses()) {
 
@@ -1559,7 +1555,7 @@ public class Flattener implements Transformer, MessageSource {
 	    }
 
 	    if (!duplicatePropertyNames.isEmpty()) {
-		result.addInfo(this, 20346, ci.name(), joiner.join(duplicatePropertyNames));
+		result.addInfo(this, 20346, ci.name(), join(duplicatePropertyNames, ", "));
 	    }
 	}
 
@@ -1774,7 +1770,7 @@ public class Flattener implements Transformer, MessageSource {
 	    SortedSet<String> geometryTVValues = new TreeSet<String>();
 	    String geometryTV = genCi.taggedValue("geometry");
 	    if (StringUtils.isNotBlank(geometryTV)) {
-		geometryTVValues = new TreeSet<String>(commaSplitter.splitToList(geometryTV));
+		geometryTVValues = new TreeSet<String>(splitToList(geometryTV, ",", true, true));
 	    }
 
 	    // identify all feature class properties that are of a geometry (ISO
@@ -1860,7 +1856,7 @@ public class Flattener implements Transformer, MessageSource {
 			String supertypeGeometryTV = supertype.taggedValue("geometry");
 			if (StringUtils.isNotBlank(supertypeGeometryTV)) {
 			    supertypeGeometryTVValues = new TreeSet<String>(
-				    commaSplitter.splitToList(supertypeGeometryTV));
+				    splitToList(supertypeGeometryTV, ",", true, true));
 			}
 
 			if (supertypeGeometryTVValues.isEmpty()) {
@@ -1900,7 +1896,7 @@ public class Flattener implements Transformer, MessageSource {
 			names.add(supertype.name());
 		    }
 
-		    result.addWarning(this, 20316, genCi.name(), commaJoiner.join(names));
+		    result.addWarning(this, 20316, genCi.name(), joinSkipNulls(names, ","));
 		}
 
 		/*
@@ -1914,7 +1910,7 @@ public class Flattener implements Transformer, MessageSource {
 			names.add(subtype.name());
 		    }
 
-		    result.addWarning(this, 20313, genCi.name(), commaJoiner.join(names));
+		    result.addWarning(this, 20313, genCi.name(), joinSkipNulls(names, ","));
 		    continue;
 		}
 	    }
@@ -2021,7 +2017,7 @@ public class Flattener implements Transformer, MessageSource {
 			     * modification separator, if so configured
 			     */
 
-			    EnumMap<Descriptor, Pair<String, String>> separatorAndSuffixByDescriptor = determineSeparatorAndSuffixForDescriptors(
+			    EnumMap<Descriptor, Entry<String, String>> separatorAndSuffixByDescriptor = determineSeparatorAndSuffixForDescriptors(
 
 				    geometryTypeSuffixSeparatorByDescriptor, mapEntry.getParam(),
 				    suffixByGeometryTypeByDescriptor);
@@ -2454,7 +2450,7 @@ public class Flattener implements Transformer, MessageSource {
 			Descriptors newDescriptorsPi1 = null;
 			if (!geometryTypeSuffixSeparatorByDescriptor.isEmpty()) {
 
-			    EnumMap<Descriptor, Pair<String, String>> separatorAndSuffixByDescriptor = determineSeparatorAndSuffixForDescriptors(
+			    EnumMap<Descriptor, Entry<String, String>> separatorAndSuffixByDescriptor = determineSeparatorAndSuffixForDescriptors(
 
 				    unionSeparatorByDescriptor, geometryTypeSuffix2, suffixByGeometryTypeByDescriptor);
 
@@ -2465,7 +2461,7 @@ public class Flattener implements Transformer, MessageSource {
 			Descriptors newDescriptorsPi2 = null;
 			if (!geometryTypeSuffixSeparatorByDescriptor.isEmpty()) {
 
-			    EnumMap<Descriptor, Pair<String, String>> separatorAndSuffixByDescriptor = determineSeparatorAndSuffixForDescriptors(
+			    EnumMap<Descriptor, Entry<String, String>> separatorAndSuffixByDescriptor = determineSeparatorAndSuffixForDescriptors(
 
 				    unionSeparatorByDescriptor, geometryTypeSuffix1, suffixByGeometryTypeByDescriptor);
 
@@ -2532,7 +2528,7 @@ public class Flattener implements Transformer, MessageSource {
 			    Descriptors newDescriptorsPi2 = null;
 			    if (!geometryTypeSuffixSeparatorByDescriptor.isEmpty()) {
 
-				EnumMap<Descriptor, Pair<String, String>> separatorAndSuffixByDescriptor = determineSeparatorAndSuffixForDescriptors(
+				EnumMap<Descriptor, Entry<String, String>> separatorAndSuffixByDescriptor = determineSeparatorAndSuffixForDescriptors(
 
 					unionSeparatorByDescriptor, geometryTypeSuffix1,
 					suffixByGeometryTypeByDescriptor);
@@ -2596,7 +2592,7 @@ public class Flattener implements Transformer, MessageSource {
 			    Descriptors newDescriptorsPi1 = null;
 			    if (!geometryTypeSuffixSeparatorByDescriptor.isEmpty()) {
 
-				EnumMap<Descriptor, Pair<String, String>> separatorAndSuffixByDescriptor = determineSeparatorAndSuffixForDescriptors(
+				EnumMap<Descriptor, Entry<String, String>> separatorAndSuffixByDescriptor = determineSeparatorAndSuffixForDescriptors(
 
 					unionSeparatorByDescriptor, geometryTypeSuffix2,
 					suffixByGeometryTypeByDescriptor);
@@ -2651,11 +2647,11 @@ public class Flattener implements Transformer, MessageSource {
 
     }
 
-    private EnumMap<Descriptor, Pair<String, String>> determineSeparatorAndSuffixForDescriptors(
+    private EnumMap<Descriptor, Entry<String, String>> determineSeparatorAndSuffixForDescriptors(
 	    EnumMap<Descriptor, String> geometryTypeSuffixSeparatorByDescriptor, String geometryTypeIdentifier,
 	    EnumMap<Descriptor, Map<String, String>> suffixByGeometryTypeByDescriptor) {
 
-	EnumMap<Descriptor, Pair<String, String>> separatorAndSuffixByDescriptor = new EnumMap<Descriptor, Pair<String, String>>(
+	EnumMap<Descriptor, Entry<String, String>> separatorAndSuffixByDescriptor = new EnumMap<Descriptor, Entry<String, String>>(
 		Descriptor.class);
 
 	for (Descriptor descriptor : geometryTypeSuffixSeparatorByDescriptor.keySet()) {
@@ -2672,7 +2668,7 @@ public class Flattener implements Transformer, MessageSource {
 		}
 	    }
 
-	    separatorAndSuffixByDescriptor.put(descriptor, new ImmutablePair<String, String>(separator, suffix));
+	    separatorAndSuffixByDescriptor.put(descriptor, new AbstractMap.SimpleEntry<>(separator, suffix));
 	}
 
 	return separatorAndSuffixByDescriptor;
@@ -2821,7 +2817,7 @@ public class Flattener implements Transformer, MessageSource {
 		     * Update descriptors (including alias) and other descriptors using descriptor
 		     * modification separator, if so configured
 		     */
-		    EnumMap<Descriptor, Pair<String, String>> separatorAndSuffixByDescriptor = determineSeparatorAndSuffixForDescriptors(
+		    EnumMap<Descriptor, Entry<String, String>> separatorAndSuffixByDescriptor = determineSeparatorAndSuffixForDescriptors(
 			    geometryTypeSuffixSeparatorByDescriptor, geometryTypeSuffix,
 			    suffixByGeometryTypeByDescriptor);
 
@@ -4899,11 +4895,11 @@ public class Flattener implements Transformer, MessageSource {
 			     * Update descriptors (including alias) and other descriptors using descriptor
 			     * modification separator, if so configured
 			     */
-			    EnumMap<Descriptor, Pair<String, String>> separatorAndSuffixByDescriptor = new EnumMap<Descriptor, Pair<String, String>>(
+			    EnumMap<Descriptor, Entry<String, String>> separatorAndSuffixByDescriptor = new EnumMap<Descriptor, Entry<String, String>>(
 				    Descriptor.class);
 			    for (Entry<Descriptor, String> entry : separatorByDescriptor.entrySet()) {
 				separatorAndSuffixByDescriptor.put(entry.getKey(),
-					new ImmutablePair<String, String>(entry.getValue(), "" + i));
+					new AbstractMap.SimpleEntry<>(entry.getValue(), "" + i));
 			    }
 			    copy.descriptors().appendSuffix(separatorAndSuffixByDescriptor, true);
 

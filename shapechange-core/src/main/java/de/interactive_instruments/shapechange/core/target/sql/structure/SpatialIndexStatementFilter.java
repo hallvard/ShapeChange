@@ -34,7 +34,7 @@ package de.interactive_instruments.shapechange.core.target.sql.structure;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.google.common.base.Joiner;
+import de.interactive_instruments.shapechange.core.util.StringUtils;
 
 import de.interactive_instruments.shapechange.core.target.sql.PostgreSQLConstants;
 import de.interactive_instruments.shapechange.core.target.sql.expressions.SpatiaLiteCreateSpatialIndexExpression;
@@ -53,8 +53,6 @@ public class SpatialIndexStatementFilter implements StatementFilter {
 	public List<Statement> filter(List<Statement> statements) {
 
 		List<Statement> result = new ArrayList<Statement>();
-
-		Joiner specJoiner = Joiner.on(" ").skipNulls();
 
 		for (Statement stmt : statements) {
 
@@ -75,7 +73,7 @@ public class SpatialIndexStatementFilter implements StatementFilter {
 			} else if (stmt instanceof CreateIndex cIndex) {
 				Index index = cIndex.getIndex();
 
-				if ((index.hasSpecs() && specJoiner.join(index.getSpecs())
+				if ((index.hasSpecs() && StringUtils.joinSkipNulls(index.getSpecs(), " ")
 						.contains("MDSYS.SPATIAL_INDEX"))
 						|| "GIST".equals(index.getProperties().getProperty(
 								PostgreSQLConstants.PROPERTY_METHOD))

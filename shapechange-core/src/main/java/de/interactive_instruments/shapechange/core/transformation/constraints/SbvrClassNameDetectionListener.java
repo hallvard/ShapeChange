@@ -29,7 +29,7 @@
  * 53113 Bonn
  * Germany
  */
-package de.interactive_instruments.shapechange.core.sbvr;
+package de.interactive_instruments.shapechange.core.transformation.constraints;
 
 import de.interactive_instruments.antlr.sbvr.SBVRBaseListener;
 import de.interactive_instruments.antlr.sbvr.SBVRParser.SentenceUsingObligationContext;

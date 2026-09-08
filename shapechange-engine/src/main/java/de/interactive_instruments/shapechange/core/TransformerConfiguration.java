@@ -38,7 +38,7 @@ import java.util.Map;
 
 import org.w3c.dom.Element;
 
-import org.apache.commons.lang3.StringUtils;
+import de.interactive_instruments.shapechange.core.util.StringUtils;
 
 /**
  * Configuration of a transformer.

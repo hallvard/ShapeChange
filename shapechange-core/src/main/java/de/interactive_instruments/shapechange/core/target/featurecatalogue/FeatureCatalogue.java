@@ -35,6 +35,7 @@ package de.interactive_instruments.shapechange.core.target.featurecatalogue;
 import de.interactive_instruments.shapechange.core.util.StreamGobbler;
 
 import java.awt.image.BufferedImage;
+import java.util.AbstractMap;
 import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.IOException;
@@ -80,9 +81,6 @@ import org.apache.fop.apps.FOUserAgent;
 import org.apache.fop.apps.Fop;
 import org.apache.fop.apps.FopFactory;
 import org.apache.fop.apps.MimeConstants;
-import org.apache.hc.core5.http.NameValuePair;
-import org.apache.hc.core5.http.message.BasicNameValuePair;
-import org.apache.hc.core5.net.WWWFormCodec;
 import org.apache.logging.log4j.util.Strings;
 import org.w3c.dom.Attr;
 import org.w3c.dom.Document;
@@ -2794,11 +2792,12 @@ public class FeatureCatalogue implements SingleTarget, MessageSource, Deferrable
 		// add parameter for hrefMappings (if defined)
 		if (!hrefMappings.isEmpty()) {
 
-		    List<NameValuePair> hrefMappingsList = new ArrayList<NameValuePair>();
+		    List<Entry<String, String>> hrefMappingsList = new ArrayList<Entry<String, String>>();
 		    for (Entry<String, URI> hrefM : hrefMappings.entrySet()) {
-			hrefMappingsList.add(new BasicNameValuePair(hrefM.getKey(), hrefM.getValue().toString()));
+			hrefMappingsList
+				.add(new AbstractMap.SimpleImmutableEntry<>(hrefM.getKey(), hrefM.getValue().toString()));
 		    }
-		    String hrefMappingsString = WWWFormCodec.format(hrefMappingsList, XsltWriter.ENCODING_CHARSET);
+		    String hrefMappingsString = XsltWriter.formatFormEncoded(hrefMappingsList, XsltWriter.ENCODING_CHARSET);
 
 		    /*
 		     * NOTE: surrounding href mapping string with double quotes to avoid issues with
@@ -2811,12 +2810,12 @@ public class FeatureCatalogue implements SingleTarget, MessageSource, Deferrable
 
 		if (!transformationParameters.isEmpty()) {
 
-		    List<NameValuePair> transformationParametersList = new ArrayList<NameValuePair>();
+		    List<Entry<String, String>> transformationParametersList = new ArrayList<Entry<String, String>>();
 		    for (Entry<String, String> transParam : transformationParameters.entrySet()) {
 			transformationParametersList
-				.add(new BasicNameValuePair(transParam.getKey(), transParam.getValue()));
+				.add(new AbstractMap.SimpleImmutableEntry<>(transParam.getKey(), transParam.getValue()));
 		    }
-		    String transformationParametersString = WWWFormCodec.format(transformationParametersList,
+		    String transformationParametersString = XsltWriter.formatFormEncoded(transformationParametersList,
 			    XsltWriter.ENCODING_CHARSET);
 
 		    /*

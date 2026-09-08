@@ -32,7 +32,7 @@
 
 package de.interactive_instruments.shapechange.core.model;
 
-import org.apache.commons.lang3.StringUtils;
+import de.interactive_instruments.shapechange.core.util.StringUtils;
 
 public abstract class AssociationInfoImpl extends InfoImpl implements AssociationInfo {
 

@@ -44,7 +44,7 @@ import java.util.regex.PatternSyntaxException;
 
 import org.w3c.dom.Element;
 
-import com.google.common.base.Splitter;
+import de.interactive_instruments.shapechange.core.util.StringUtils;
 
 /**
  * Configuration information for a process.
@@ -332,16 +332,7 @@ public class ProcessConfiguration {
 
 		} else {
 
-			Splitter splitter = Splitter.on(separator);
-
-			if (omitEmptyStrings) {
-				splitter = splitter.omitEmptyStrings();
-			}
-			if (trimResults) {
-				splitter = splitter.trimResults();
-			}
-
-			List<String> result = splitter.splitToList(paramValue);
+			List<String> result = StringUtils.splitToList(paramValue, separator, omitEmptyStrings, trimResults);
 
 			if (result.isEmpty()) {
 

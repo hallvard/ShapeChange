@@ -34,7 +34,7 @@ package de.interactive_instruments.shapechange.core.model;
 
 import java.util.Vector;
 
-import org.apache.commons.lang3.StringUtils;
+import de.interactive_instruments.shapechange.core.util.StringUtils;
 import org.apache.xerces.util.XMLChar;
 
 import de.interactive_instruments.shapechange.core.profile.Profiles;

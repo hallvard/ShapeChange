@@ -33,7 +33,7 @@ package de.interactive_instruments.shapechange.core.fol;
 
 import java.util.List;
 
-import org.apache.commons.lang3.StringUtils;
+import de.interactive_instruments.shapechange.core.util.StringUtils;
 
 /**
  * @author Johannes Echterhoff

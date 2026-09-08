@@ -37,7 +37,6 @@ import de.interactive_instruments.shapechange.core.ShapeChangeResult;
 import de.interactive_instruments.shapechange.core.TransformerConfiguration;
 import de.interactive_instruments.shapechange.core.model.PackageInfo;
 import de.interactive_instruments.shapechange.core.model.generic.GenericModel;
-import de.interactive_instruments.shapechange.core.sbvr.SbvrRuleLoader;
 import de.interactive_instruments.shapechange.core.transformation.Transformer;
 
 /**

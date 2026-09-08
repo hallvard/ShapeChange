@@ -29,7 +29,7 @@
  * 53113 Bonn
  * Germany
  */
-package de.interactive_instruments.shapechange.core.sbvr;
+package de.interactive_instruments.shapechange.core.transformation.constraints;
 
 /**
  * Helper class to store SBVR rule information extracted from an external

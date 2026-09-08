@@ -46,7 +46,7 @@ import java.util.Vector;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.monitor.FileAlterationObserver;
-import org.apache.commons.lang3.StringUtils;
+import de.interactive_instruments.shapechange.core.util.StringUtils;
 import org.xml.sax.SAXException;
 
 import de.interactive_instruments.shapechange.core.target.DeferrableOutputWriter;

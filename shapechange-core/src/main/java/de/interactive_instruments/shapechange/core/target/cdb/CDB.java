@@ -56,7 +56,7 @@ import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
-import com.google.common.base.Joiner;
+import static de.interactive_instruments.shapechange.core.util.StringUtils.joinSkipNulls;
 
 import de.interactive_instruments.shapechange.core.util.XMLUtil;
 import de.interactive_instruments.shapechange.core.MapEntryParamInfos;
@@ -438,7 +438,7 @@ public class CDB implements SingleTarget, MessageSource {
 	}
 
 	// determine version
-	String defaultVersion = Joiner.on(",").skipNulls().join(schemaVersions);
+	String defaultVersion = joinSkipNulls(schemaVersions, ",");
 	String version = options.parameterAsString(this.getClass().getName(), PARAM_VERSION, defaultVersion, false,
 		true);
 

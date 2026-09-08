@@ -34,7 +34,7 @@ package de.interactive_instruments.shapechange.core.profile;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.commons.lang3.StringUtils;
+import de.interactive_instruments.shapechange.core.util.StringUtils;
 
 import de.interactive_instruments.shapechange.core.model.MalformedProfileIdentifierException;
 

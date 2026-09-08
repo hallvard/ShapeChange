@@ -32,6 +32,7 @@
 
 package de.interactive_instruments.shapechange.core.model;
 
+import java.lang.reflect.Method;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashSet;
@@ -47,7 +48,6 @@ import de.interactive_instruments.shapechange.core.ShapeChangeResult.MessageCont
 import de.interactive_instruments.shapechange.core.fol.FolExpression;
 import de.interactive_instruments.shapechange.core.sbvr.Sbvr2FolParser;
 import de.interactive_instruments.shapechange.core.sbvr.SbvrConstants;
-import de.interactive_instruments.shapechange.core.sbvr.SbvrRuleLoader;
 
 public abstract class ModelImpl implements Model {
 
@@ -188,14 +188,33 @@ public abstract class ModelImpl implements Model {
 	    if (sbvrFileLocation != null) {
 
 		/*
-		 * if no sbvr file is provided, the loader will simply not contain any sbvr
-		 * rules
+		 * SbvrRuleLoader reads an Excel file (via Apache POI) and therefore lives in
+		 * shapechange-core, not in the engine, so it is loaded reflectively here -
+		 * the same pattern used throughout this codebase for optional, pluggable
+		 * components (see e.g. DefaultModelProvider, TargetRegistry). If it is not on
+		 * the classpath (e.g. when running the engine standalone), the SBVR rules are
+		 * simply not loaded; use the ConstraintLoader transformation instead in that
+		 * case.
 		 */
-		SbvrRuleLoader sbvrLoader = new SbvrRuleLoader(sbvrFileLocation, options, result, this);
+		try {
 
-		for (PackageInfo pi : selectedSchemas()) {
+		    Class<?> loaderClass = Class.forName(
+			    "de.interactive_instruments.shapechange.core.transformation.constraints.SbvrRuleLoader");
+		    Object sbvrLoader = loaderClass
+			    .getConstructor(String.class, Options.class, ShapeChangeResult.class, Model.class)
+			    .newInstance(sbvrFileLocation, options, result, this);
+		    Method loadMethod = loaderClass.getMethod("loadSBVRRulesAsConstraints", PackageInfo.class);
 
-		    sbvrLoader.loadSBVRRulesAsConstraints(pi);
+		    for (PackageInfo pi : selectedSchemas()) {
+			loadMethod.invoke(sbvrLoader, pi);
+		    }
+
+		} catch (ClassNotFoundException e) {
+		    result.addError("Parameter " + Options.PARAM_CONSTRAINT_EXCEL_FILE
+			    + " was set, but the SBVR rule loader (part of shapechange-core) is not available on the classpath; SBVR rules from the external file were not loaded.");
+		} catch (ReflectiveOperationException e) {
+		    result.addError(
+			    "Could not load SBVR rules from file '" + sbvrFileLocation + "': " + e.getMessage());
 		}
 	    }
 	}

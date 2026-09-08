@@ -36,18 +36,16 @@ import java.util.List;
 import java.util.Map.Entry;
 import java.util.Objects;
 
-import com.google.common.base.Joiner;
-
 import java.util.SortedMap;
 import java.util.TreeMap;
+
+import de.interactive_instruments.shapechange.core.util.StringUtils;
 
 /**
  * @author Johannes Echterhoff (echterhoff at interactive-instruments
  *         dot de)
  */
 public class ProfileIdentifier implements Comparable<ProfileIdentifier> {
-
-	private static final Joiner commaJoiner = Joiner.on(",").skipNulls();
 
 	private String name;
 	private ProfileVersionIndicator versionIndicator;
@@ -134,7 +132,7 @@ public class ProfileIdentifier implements Comparable<ProfileIdentifier> {
 				}
 			}
 
-			sb.append(commaJoiner.join(parameterValues));
+			sb.append(StringUtils.joinSkipNulls(parameterValues, ","));
 
 			sb.append(")");
 		}

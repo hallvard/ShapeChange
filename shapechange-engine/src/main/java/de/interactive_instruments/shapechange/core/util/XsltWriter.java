@@ -37,8 +37,12 @@ import java.io.InputStream;
 import java.net.URI;
 import java.net.URL;
 import java.net.URLConnection;
+import java.net.URLDecoder;
+import java.net.URLEncoder;
 import java.nio.charset.Charset;
 import java.nio.file.Files;
+import java.util.AbstractMap;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -49,9 +53,6 @@ import javax.xml.transform.Transformer;
 import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.stream.StreamResult;
 import javax.xml.transform.stream.StreamSource;
-
-import org.apache.hc.core5.http.NameValuePair;
-import org.apache.hc.core5.net.WWWFormCodec;
 
 import de.interactive_instruments.shapechange.core.ShapeChangeResult;
 
@@ -95,6 +96,54 @@ public class XsltWriter {
 	private Map<String, String> transformationParameters = new HashMap<String, String>();
 
 	private ShapeChangeResult result;
+
+	/**
+	 * Parses a string of key-value pairs using
+	 * {@code application/x-www-form-urlencoded} query syntax: pairs separated
+	 * by '&amp;', key and value within a pair separated by the first '=', both
+	 * URL-decoded using the given charset. A pair without '=' is treated as a
+	 * key with an empty value. Empty pairs (e.g. from a leading, trailing, or
+	 * doubled '&amp;') are skipped.
+	 */
+	static List<Map.Entry<String, String>> parseFormEncoded(String s, Charset charset) {
+		List<Map.Entry<String, String>> result = new ArrayList<>();
+		if (s == null || s.isEmpty()) {
+			return result;
+		}
+		for (String pair : s.split("&")) {
+			if (pair.isEmpty()) {
+				continue;
+			}
+			int eq = pair.indexOf('=');
+			String rawKey = eq >= 0 ? pair.substring(0, eq) : pair;
+			String rawValue = eq >= 0 ? pair.substring(eq + 1) : "";
+			result.add(new AbstractMap.SimpleImmutableEntry<>(URLDecoder.decode(rawKey, charset),
+					URLDecoder.decode(rawValue, charset)));
+		}
+		return result;
+	}
+
+	/**
+	 * Formats key-value pairs as {@code application/x-www-form-urlencoded}
+	 * query syntax - the inverse of {@link #parseFormEncoded(String, Charset)}
+	 * - for passing to a separate {@code XsltWriter} process invocation (see
+	 * {@link #main(String[])}, {@link #PARAM_hrefMappings},
+	 * {@link #PARAM_transformationParameters}).
+	 */
+	public static String formatFormEncoded(Iterable<? extends Map.Entry<String, String>> pairs, Charset charset) {
+		StringBuilder sb = new StringBuilder();
+		boolean first = true;
+		for (Map.Entry<String, String> pair : pairs) {
+			if (!first) {
+				sb.append('&');
+			}
+			first = false;
+			sb.append(URLEncoder.encode(pair.getKey(), charset));
+			sb.append('=');
+			sb.append(URLEncoder.encode(pair.getValue(), charset));
+		}
+		return sb.toString();
+	}
 
 	/**
 	 * 
@@ -247,21 +296,21 @@ public class XsltWriter {
 			Map<String, URI> hrefMappings = new HashMap<String, URI>();
 
 			if (hrefMappingsString != null) {
-				List<NameValuePair> hrefMappingsList = WWWFormCodec
-						.parse(hrefMappingsString, ENCODING_CHARSET);
-				for (NameValuePair nvp : hrefMappingsList) {
+				List<Map.Entry<String, String>> hrefMappingsList = parseFormEncoded(hrefMappingsString,
+						ENCODING_CHARSET);
+				for (Map.Entry<String, String> nvp : hrefMappingsList) {
 
-					hrefMappings.put(nvp.getName(), new URI(nvp.getValue()));
+					hrefMappings.put(nvp.getKey(), new URI(nvp.getValue()));
 				}
 			}
 
 			Map<String, String> transformationParameters = new HashMap<String, String>();
 
 			if (transformationParametersString != null) {
-				List<NameValuePair> transParamList = WWWFormCodec.parse(
-						transformationParametersString, ENCODING_CHARSET);
-				for (NameValuePair nvp : transParamList) {
-					transformationParameters.put(nvp.getName(), nvp.getValue());
+				List<Map.Entry<String, String>> transParamList = parseFormEncoded(transformationParametersString,
+						ENCODING_CHARSET);
+				for (Map.Entry<String, String> nvp : transParamList) {
+					transformationParameters.put(nvp.getKey(), nvp.getValue());
 				}
 			}
 

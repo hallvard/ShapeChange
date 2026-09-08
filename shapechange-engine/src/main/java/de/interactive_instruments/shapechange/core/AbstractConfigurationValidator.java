@@ -38,8 +38,7 @@ import java.util.SortedSet;
 import java.util.TreeSet;
 import java.util.regex.Pattern;
 
-import org.apache.commons.lang3.StringUtils;
-import org.apache.commons.lang3.Strings;
+import de.interactive_instruments.shapechange.core.util.StringUtils;
 import org.apache.commons.text.similarity.LevenshteinDistance;
 
 import de.interactive_instruments.shapechange.core.ShapeChangeResult.MessageContext;
@@ -181,7 +180,7 @@ public abstract class AbstractConfigurationValidator implements ConfigurationVal
 
 	String paramValue = config.getParameterValue(parameterName);
 
-	if (Strings.CI.equalsAny(paramValue, null, "true", "false")) {
+	if (StringUtils.equalsIgnoreCaseAny(paramValue, null, "true", "false")) {
 	    return true;
 	}
 
@@ -253,7 +252,7 @@ public abstract class AbstractConfigurationValidator implements ConfigurationVal
 	    String characteristicValue = characteristics.get(meParamCharacteristic);
 
 	    if (StringUtils.isNotBlank(characteristicValue)
-		    && !Strings.CI.equalsAny(characteristicValue, allowedValues)) {
+		    && !StringUtils.equalsIgnoreCaseAny(characteristicValue, allowedValues)) {
 
 		MessageContext mc = result.addError(null, 1_000_010, meParamName, meParamCharacteristic,
 			characteristicValue, StringUtils.join(allowedValues, ", "));
@@ -282,7 +281,7 @@ public abstract class AbstractConfigurationValidator implements ConfigurationVal
 
 	    String paramValue = config.getParameterValue(paramName);
 
-	    if (!Strings.CI.equalsAny(paramValue, allowedValues)) {
+	    if (!StringUtils.equalsIgnoreCaseAny(paramValue, allowedValues)) {
 
 		MessageContext mc = result.addError(null, 1_000_005, paramName, paramValue);
 		addMessageDetails(mc);

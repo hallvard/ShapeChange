@@ -84,7 +84,8 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.dataformat.yaml.YAMLFactory;
 import com.flipkart.zjsonpatch.JsonDiff;
-import com.google.common.base.Joiner;
+
+import static de.interactive_instruments.shapechange.core.util.StringUtils.joinSkipNulls;
 
 import de.interactive_instruments.shapechange.core.ShapeChangeResult;
 import de.interactive_instruments.shapechange.core.util.ExternalCallException;
@@ -265,7 +266,7 @@ public abstract class BasicTest {
 
 	    if (!refFileNames.isEmpty()) {
 
-		String unmatchedReferenceFiles = Joiner.on(", ").skipNulls().join(refFileNames);
+		String unmatchedReferenceFiles = joinSkipNulls(refFileNames, ", ");
 		fail("No corresponding result files found for the following reference files (in directory "
 			+ refDir.getAbsolutePath() + "): " + unmatchedReferenceFiles);
 	    }

@@ -37,7 +37,7 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 
-import org.apache.commons.lang3.StringUtils;
+import de.interactive_instruments.shapechange.core.util.StringUtils;
 
 /**
  * Builds the {@link Comparator} described by the <code>sortedOutput</code>

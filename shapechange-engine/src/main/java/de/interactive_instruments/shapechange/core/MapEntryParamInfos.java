@@ -37,8 +37,7 @@ import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import org.apache.commons.lang3.StringUtils;
-import org.apache.commons.lang3.Strings;
+import de.interactive_instruments.shapechange.core.util.StringUtils;
 
 import de.interactive_instruments.shapechange.core.ShapeChangeResult.MessageContext;
 
@@ -192,10 +191,10 @@ public class MapEntryParamInfos implements MessageSource {
 					String suffixToAppend = "";
 
 					if (characteristic.endsWith("==")) {
-					    valueToMatch = Strings.CS.removeEnd(characteristic, "==");
+					    valueToMatch = StringUtils.removeEnd(characteristic, "==");
 					    suffixToAppend = "==";
 					} else if (characteristic.endsWith("=")) {
-					    valueToMatch = Strings.CS.removeEnd(characteristic, "=");
+					    valueToMatch = StringUtils.removeEnd(characteristic, "=");
 					    suffixToAppend = "=";
 					}
 

@@ -34,7 +34,7 @@ package de.interactive_instruments.shapechange.core;
 import java.util.Objects;
 import java.util.SortedSet;
 
-import org.apache.commons.lang3.StringUtils;
+import de.interactive_instruments.shapechange.core.util.StringUtils;
 
 /**
  * Represents a set of rules. This set may be accompanied by a set of

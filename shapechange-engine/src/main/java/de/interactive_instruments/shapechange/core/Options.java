@@ -58,14 +58,11 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import org.apache.commons.io.FileUtils;
-import org.apache.commons.lang3.StringUtils;
-import org.apache.commons.lang3.SystemUtils;
+import de.interactive_instruments.shapechange.core.util.StringUtils;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
-
-import com.google.common.base.Splitter;
 
 import de.interactive_instruments.shapechange.core.AIXMSchemaInfos.AIXMSchemaInfo;
 import de.interactive_instruments.shapechange.core.model.PackageInfo;
@@ -909,16 +906,7 @@ public class Options {
 
 	} else {
 
-	    Splitter splitter = Splitter.on(',');
-
-	    if (omitEmptyStrings) {
-		splitter = splitter.omitEmptyStrings();
-	    }
-	    if (trimResults) {
-		splitter = splitter.trimResults();
-	    }
-
-	    List<String> result = splitter.splitToList(paramValue);
+	    List<String> result = StringUtils.splitToList(paramValue, ",", omitEmptyStrings, trimResults);
 
 	    if (result.isEmpty()) {
 
@@ -2185,7 +2173,7 @@ public class Options {
 	setParameter("definitionSeparator", "-- Definition --");
 	setParameter("descriptionSeparator", "-- Description --");
 	setParameter("nameSeparator", "-- Name --");
-	setParameter("outputDirectory", SystemUtils.getUserDir().getPath());
+	setParameter("outputDirectory", new File(System.getProperty("user.dir")).getPath());
 	setParameter("sortedSchemaOutput", "true");
 	setParameter("sortedOutput", "true");
 	setParameter("oclConstraintTypeRegex", "(OCL|Invariant)");

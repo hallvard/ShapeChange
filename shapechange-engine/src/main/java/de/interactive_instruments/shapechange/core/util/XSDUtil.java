@@ -49,7 +49,6 @@ import org.w3c.dom.Document;
 import org.xml.sax.SAXException;
 
 import de.interactive_instruments.shapechange.core.ShapeChangeErrorHandler;
-import org.apache.commons.lang3.StringUtils;
 
 /**
  * Provides utility methods for performing XML Schema validation.

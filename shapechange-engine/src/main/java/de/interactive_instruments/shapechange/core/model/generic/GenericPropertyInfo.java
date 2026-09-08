@@ -36,7 +36,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Vector;
 
-import org.apache.commons.lang3.StringUtils;
+import de.interactive_instruments.shapechange.core.util.StringUtils;
 
 import de.interactive_instruments.shapechange.core.MessageSource;
 import de.interactive_instruments.shapechange.core.Multiplicity;

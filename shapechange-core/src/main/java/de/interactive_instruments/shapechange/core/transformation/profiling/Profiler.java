@@ -46,10 +46,8 @@ import java.util.regex.Pattern;
 
 import org.apache.commons.lang3.StringUtils;
 
-import com.google.common.base.Joiner;
-import com.google.common.base.Splitter;
-import com.google.common.collect.Sets;
-import com.google.common.collect.Sets.SetView;
+import static de.interactive_instruments.shapechange.core.util.StringUtils.joinSkipNulls;
+import static de.interactive_instruments.shapechange.core.util.StringUtils.splitToList;
 
 import de.interactive_instruments.shapechange.core.MessageSource;
 import de.interactive_instruments.shapechange.core.Multiplicity;
@@ -91,10 +89,6 @@ import de.interactive_instruments.shapechange.core.StatusBoard;
  *         de)
  */
 public class Profiler implements Transformer, MessageSource {
-
-	private static final Splitter commaSplitter = Splitter.on(',')
-			.omitEmptyStrings().trimResults();
-	private static final Joiner commaJoiner = Joiner.on(",").skipNulls();
 
 	/* Profiler status codes */
 	public static final int STATUS_PREPROCESSING_PROFILESVALUECONSISTENCYCHECK = 200100;
@@ -592,22 +586,19 @@ public class Profiler implements Transformer, MessageSource {
 									 */
 
 									SortedSet<String> geometryTVValues = new TreeSet<String>(
-											commaSplitter
-													.splitToList(geometryTV));
+											splitToList(geometryTV, ",", true, true));
 									SortedSet<String> geometryProfileValues = new TreeSet<String>(
-											commaSplitter.splitToList(
-													parameterValue));
+											splitToList(parameterValue, ",", true, true));
 
-									SetView<String> intersection = Sets
-											.intersection(geometryProfileValues,
-													geometryTVValues);
+									SortedSet<String> intersection = new TreeSet<>(geometryProfileValues);
+									intersection.retainAll(geometryTVValues);
 
 									if (intersection.isEmpty()) {
 										// then do nothing
 									} else {
 										genCi.setTaggedValue(
 												PROFILE_PARAMETER_GEOMETRY,
-												commaJoiner.join(intersection),
+												joinSkipNulls(intersection, ","),
 												false);
 									}
 								}

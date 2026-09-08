@@ -48,7 +48,7 @@ import java.util.regex.PatternSyntaxException;
 
 import org.apache.commons.lang3.StringUtils;
 
-import com.google.common.base.Joiner;
+import static de.interactive_instruments.shapechange.core.util.StringUtils.joinSkipNulls;
 
 import de.interactive_instruments.shapechange.core.MessageSource;
 import de.interactive_instruments.shapechange.core.Options;
@@ -71,8 +71,6 @@ import de.interactive_instruments.shapechange.core.util.ValueTypeOptions;
  *
  */
 public class ConstraintConverter implements Transformer, MessageSource {
-
-    private static final Joiner commaJoiner = Joiner.on(",").skipNulls();
 
     /* ------------------------------------------- */
     /* --- configuration parameter identifiers --- */
@@ -607,7 +605,7 @@ public class ConstraintConverter implements Transformer, MessageSource {
 
 		if (geometryTVValues.size() > 0) {
 
-		    String join = commaJoiner.join(geometryTVValues);
+		    String join = joinSkipNulls(geometryTVValues, ",");
 
 		    String geometryTV = genCi.taggedValue("geometry");
 		    if (StringUtils.isNotBlank(geometryTV)) {

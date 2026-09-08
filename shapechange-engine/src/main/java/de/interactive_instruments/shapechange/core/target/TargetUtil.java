@@ -31,13 +31,10 @@
  */
 package de.interactive_instruments.shapechange.core.target;
 
+import java.util.Optional;
 import java.util.SortedSet;
 
-import org.apache.commons.lang3.StringUtils;
-
-import com.google.common.base.Optional;
-import com.google.common.base.Predicate;
-import com.google.common.collect.Iterables;
+import de.interactive_instruments.shapechange.core.util.StringUtils;
 
 import de.interactive_instruments.shapechange.core.Options;
 import de.interactive_instruments.shapechange.core.ShapeChangeResult;
@@ -59,13 +56,8 @@ public final class TargetUtil {
 				mainAppSchema = null;
 			}
 		} else {
-			Optional<? extends PackageInfo> tryFindMainAppSchemaResult = Iterables.tryFind(selectedSchemas, new Predicate<PackageInfo>() {
-				
-				@Override
-				public boolean apply(PackageInfo packageInfo) {
-					return mainAppSchemaName.equalsIgnoreCase(packageInfo.name());
-				}
-			});
+			Optional<? extends PackageInfo> tryFindMainAppSchemaResult = selectedSchemas.stream()
+					.filter(packageInfo -> mainAppSchemaName.equalsIgnoreCase(packageInfo.name())).findFirst();
 			if (tryFindMainAppSchemaResult.isPresent()) {
 				mainAppSchema = tryFindMainAppSchemaResult.get();
 			} else {

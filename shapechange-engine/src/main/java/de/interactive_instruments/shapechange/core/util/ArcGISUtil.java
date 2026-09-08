@@ -31,7 +31,6 @@
  */
 package de.interactive_instruments.shapechange.core.util;
 
-import org.apache.commons.lang3.StringUtils;
 
 import de.interactive_instruments.shapechange.core.model.ClassInfo;
 import de.interactive_instruments.shapechange.core.model.Model;

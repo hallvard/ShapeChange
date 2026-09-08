@@ -38,8 +38,7 @@ import java.util.List;
 import java.util.Map.Entry;
 import java.util.Set;
 
-import org.apache.commons.lang3.StringUtils;
-import org.apache.commons.lang3.tuple.Pair;
+import de.interactive_instruments.shapechange.core.util.StringUtils;
 
 /**
  * Cache for descriptors.
@@ -355,7 +354,7 @@ public class Descriptors {
 	 * @param addDescriptorIfMissing tbd 
 	 */
 	public void appendSuffix(
-			EnumMap<Descriptor, Pair<String, String>> separatorAndSuffixByDescriptor,
+			EnumMap<Descriptor, Entry<String, String>> separatorAndSuffixByDescriptor,
 			boolean addDescriptorIfMissing) {
 
 		if (separatorAndSuffixByDescriptor != null) {
@@ -363,14 +362,14 @@ public class Descriptors {
 			for (Descriptor descriptor : separatorAndSuffixByDescriptor
 					.keySet()) {
 
-				Pair<String, String> separatorAndSuffix = separatorAndSuffixByDescriptor
+				Entry<String, String> separatorAndSuffix = separatorAndSuffixByDescriptor
 						.get(descriptor);
 
 				if (addDescriptorIfMissing && (!this.descriptorValues
 						.containsKey(descriptor)
 						|| this.descriptorValues.get(descriptor) == null)) {
 
-					this.put(descriptor, separatorAndSuffix.getRight());
+					this.put(descriptor, separatorAndSuffix.getValue());
 
 				} else if (this.descriptorValues != null
 						&& this.descriptorValues.containsKey(descriptor)) {
@@ -378,8 +377,8 @@ public class Descriptors {
 					DescriptorValue dv = this.descriptorValues.get(descriptor);
 
 					if (dv != null) {
-						dv.appendSuffix(separatorAndSuffix.getLeft()
-								+ separatorAndSuffix.getRight());
+						dv.appendSuffix(separatorAndSuffix.getKey()
+								+ separatorAndSuffix.getValue());
 					}
 				}
 			}

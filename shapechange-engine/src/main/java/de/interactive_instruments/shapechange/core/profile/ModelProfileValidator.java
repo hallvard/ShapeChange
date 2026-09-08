@@ -36,12 +36,7 @@ import java.util.List;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
-import org.apache.commons.lang3.StringUtils;
-
-import com.google.common.base.Joiner;
-import com.google.common.base.Splitter;
-import com.google.common.collect.Sets;
-import com.google.common.collect.Sets.SetView;
+import de.interactive_instruments.shapechange.core.util.StringUtils;
 
 import de.interactive_instruments.shapechange.core.MessageSource;
 import de.interactive_instruments.shapechange.core.Multiplicity;
@@ -60,10 +55,6 @@ import de.interactive_instruments.shapechange.core.model.PropertyInfo;
  *
  */
 public class ModelProfileValidator implements MessageSource {
-
-	private static final Splitter commaSplitter = Splitter.on(',')
-			.omitEmptyStrings().trimResults();
-	private static final Joiner commaJoiner = Joiner.on(", ").skipNulls();
 
 	private Model model;
 	private ShapeChangeResult result;
@@ -197,7 +188,7 @@ public class ModelProfileValidator implements MessageSource {
 
 					// identify set of geometries from tagged value
 					SortedSet<String> geometryTVValues = new TreeSet<String>(
-							commaSplitter.splitToList(geometryTV));
+							StringUtils.splitToList(geometryTV, ",", true, true));
 
 					for (ProfileIdentifier profile : ci.profiles()
 							.getProfileIdentifiers()) {
@@ -210,19 +201,17 @@ public class ModelProfileValidator implements MessageSource {
 							if (geometryProfile != null) {
 
 								SortedSet<String> geometryProfileValues = new TreeSet<String>(
-										commaSplitter
-												.splitToList(geometryProfile));
+										StringUtils.splitToList(geometryProfile, ",", true, true));
 
 								/*
 								 * first check that sets intersect, then check
 								 * if geometry profile values are not fully
 								 * contained in geometry tagged value of class
 								 */
-								SetView<String> geometryIntersection = Sets
-										.intersection(geometryProfileValues,
-												geometryTVValues);
+								boolean geometryIntersects = geometryProfileValues.stream()
+										.anyMatch(geometryTVValues::contains);
 
-								if (geometryIntersection.isEmpty()) {
+								if (!geometryIntersects) {
 									MessageContext mc = result.addWarning(this,
 											104, profile.getName(), ci.name(),
 											geometryTV, geometryProfile);
@@ -232,15 +221,14 @@ public class ModelProfileValidator implements MessageSource {
 
 								} else {
 
-									SetView<String> geometryDiff = Sets
-											.difference(geometryProfileValues,
-													geometryTVValues);
+									SortedSet<String> geometryDiff = new TreeSet<>(geometryProfileValues);
+									geometryDiff.removeAll(geometryTVValues);
 
 									if (!geometryDiff.isEmpty()) {
 										MessageContext mc = result.addWarning(
 												this, 101, profile.getName(),
 												ci.name(),
-												commaJoiner.join(geometryDiff));
+												StringUtils.joinSkipNulls(geometryDiff, ", "));
 										if (mc != null) {
 											mc.addDetail(this, 1,
 													ci.fullName());
