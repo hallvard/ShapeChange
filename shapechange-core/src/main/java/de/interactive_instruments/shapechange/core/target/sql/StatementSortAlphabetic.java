@@ -31,6 +31,8 @@
  */
 package de.interactive_instruments.shapechange.core.target.sql;
 
+import de.interactive_instruments.shapechange.core.SqlConstants;
+
 import java.util.Comparator;
 
 import de.interactive_instruments.shapechange.core.target.sql.expressions.Expression;

@@ -31,6 +31,8 @@
  */
 package de.interactive_instruments.shapechange.core.target.xmlschema;
 
+import de.interactive_instruments.shapechange.core.XmlSchemaConstants;
+
 import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;

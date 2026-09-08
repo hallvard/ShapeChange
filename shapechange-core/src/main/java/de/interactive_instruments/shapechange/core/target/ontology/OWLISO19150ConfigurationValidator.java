@@ -31,6 +31,9 @@
  */
 package de.interactive_instruments.shapechange.core.target.ontology;
 
+import de.interactive_instruments.shapechange.core.GeneralObjectProperty;
+import de.interactive_instruments.shapechange.core.RdfGeneralProperty;
+
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;

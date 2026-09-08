@@ -10,6 +10,11 @@
 	<artifactId>shapechange-core</artifactId>
 	<dependencies>
 		<dependency>
+			<groupId>${project.groupId}</groupId>
+			<artifactId>shapechange-engine</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+		<dependency>
 			<groupId>net.shapechange</groupId>
 			<artifactId>ShapeChangeAntlr</artifactId>
 		</dependency>

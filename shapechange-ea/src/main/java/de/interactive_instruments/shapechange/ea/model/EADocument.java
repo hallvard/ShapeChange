@@ -72,7 +72,7 @@ import de.interactive_instruments.shapechange.core.model.Model;
 import de.interactive_instruments.shapechange.core.model.ModelImpl;
 import de.interactive_instruments.shapechange.core.model.PackageInfo;
 import de.interactive_instruments.shapechange.core.model.PropertyInfo;
-import de.interactive_instruments.shapechange.core.ui.StatusBoard;
+import de.interactive_instruments.shapechange.core.StatusBoard;
 import de.interactive_instruments.shapechange.ea.util.EAElementUtil;
 import de.interactive_instruments.shapechange.ea.util.EAException;
 import de.interactive_instruments.shapechange.ea.util.EARepositoryUtil;

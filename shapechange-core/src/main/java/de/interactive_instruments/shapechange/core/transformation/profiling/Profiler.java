@@ -80,7 +80,7 @@ import de.interactive_instruments.shapechange.core.profile.ModelProfileValidator
 import de.interactive_instruments.shapechange.core.profile.ProfileIdentifier;
 import de.interactive_instruments.shapechange.core.profile.Profiles;
 import de.interactive_instruments.shapechange.core.transformation.Transformer;
-import de.interactive_instruments.shapechange.core.ui.StatusBoard;
+import de.interactive_instruments.shapechange.core.StatusBoard;
 
 /**
  * Creates a profile of the base model by removing all classes and properties

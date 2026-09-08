@@ -57,7 +57,7 @@ import org.w3c.dom.Comment;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
-import de.interactive_instruments.shapechange.core.ui.StatusBoard;
+import de.interactive_instruments.shapechange.core.StatusBoard;
 import de.interactive_instruments.shapechange.core.util.XMLUtil;
 import de.interactive_instruments.shapechange.core.MessageSource;
 import de.interactive_instruments.shapechange.core.Options;

@@ -32,6 +32,12 @@
 
 package de.interactive_instruments.shapechange.core.target.ontology;
 
+import de.interactive_instruments.shapechange.core.GeneralDataProperty;
+import de.interactive_instruments.shapechange.core.GeneralObjectProperty;
+import de.interactive_instruments.shapechange.core.RdfGeneralProperty;
+import de.interactive_instruments.shapechange.core.RdfPropertyValue;
+import de.interactive_instruments.shapechange.core.PropertyAxiom;
+
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;

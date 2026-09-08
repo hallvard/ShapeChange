@@ -62,6 +62,17 @@
 					<exclude>*.properties</exclude>
 				</excludes>
 			</resource>
+			<resource>
+				<directory>../shapechange-engine/src/main/resources</directory>
+				<filtering>true</filtering>
+				<targetPath>${project.basedir}/sc-resources</targetPath>
+				<includes>
+					<include>**/*</include>
+				</includes>
+				<excludes>
+					<exclude>*.properties</exclude>
+				</excludes>
+			</resource>
 		</resources>
 		<plugins>
 			<plugin>

@@ -39,7 +39,7 @@ import org.apache.commons.lang3.StringUtils;
 
 import de.interactive_instruments.shapechange.core.model.ClassInfo;
 import de.interactive_instruments.shapechange.core.model.PropertyInfo;
-import de.interactive_instruments.shapechange.core.target.sql.SqlConstants;
+import de.interactive_instruments.shapechange.core.SqlConstants;
 import de.interactive_instruments.shapechange.core.target.sql.expressions.Expression;
 
 /**

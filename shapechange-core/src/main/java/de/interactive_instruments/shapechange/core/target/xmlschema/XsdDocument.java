@@ -32,6 +32,8 @@
 
 package de.interactive_instruments.shapechange.core.target.xmlschema;
 
+import de.interactive_instruments.shapechange.core.XmlSchemaConstants;
+
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;

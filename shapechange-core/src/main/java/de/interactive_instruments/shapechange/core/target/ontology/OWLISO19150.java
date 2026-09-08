@@ -32,6 +32,8 @@
 
 package de.interactive_instruments.shapechange.core.target.ontology;
 
+import de.interactive_instruments.shapechange.core.RdfGeneralProperty;
+
 import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;

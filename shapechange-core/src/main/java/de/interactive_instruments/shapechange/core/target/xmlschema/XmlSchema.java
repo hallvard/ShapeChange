@@ -32,6 +32,8 @@ a * ShapeChange - processing application schemas for geographic information
 
 package de.interactive_instruments.shapechange.core.target.xmlschema;
 
+import de.interactive_instruments.shapechange.core.XmlSchemaConstants;
+
 import java.io.File;
 import java.util.Arrays;
 import java.util.Collections;

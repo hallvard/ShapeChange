@@ -32,6 +32,8 @@
 
 package de.interactive_instruments.shapechange.core.target.featurecatalogue;
 
+import de.interactive_instruments.shapechange.core.util.StreamGobbler;
+
 import java.awt.image.BufferedImage;
 import java.io.BufferedOutputStream;
 import java.io.File;
@@ -119,7 +121,7 @@ import de.interactive_instruments.shapechange.core.modeldiff.Differ;
 import de.interactive_instruments.shapechange.core.target.DeferrableOutputWriter;
 import de.interactive_instruments.shapechange.core.target.SingleTarget;
 import de.interactive_instruments.shapechange.core.transformation.TransformationConstants;
-import de.interactive_instruments.shapechange.core.ui.StatusBoard;
+import de.interactive_instruments.shapechange.core.StatusBoard;
 import de.interactive_instruments.shapechange.core.util.XMLUtil;
 import de.interactive_instruments.shapechange.core.util.XMLWriter;
 import de.interactive_instruments.shapechange.core.util.XsltWriter;

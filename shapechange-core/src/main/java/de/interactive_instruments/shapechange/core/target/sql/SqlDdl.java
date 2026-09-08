@@ -31,6 +31,8 @@
  */
 package de.interactive_instruments.shapechange.core.target.sql;
 
+import de.interactive_instruments.shapechange.core.SqlConstants;
+
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;

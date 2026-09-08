@@ -42,6 +42,7 @@
 	</developers>
 
 	<modules>
+		<module>shapechange-engine</module>
 		<module>shapechange-core</module>
 		<module>shapechange-app</module>
 	</modules>

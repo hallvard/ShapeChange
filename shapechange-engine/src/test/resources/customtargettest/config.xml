@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ShapeChangeConfiguration xmlns="http://www.interactive-instruments.de/ShapeChange/Configuration/1.1"
+	xmlns:sc="http://www.interactive-instruments.de/ShapeChange/Configuration/1.1"
+	xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.interactive-instruments.de/ShapeChange/Configuration/1.1 ../../../main/resources/schema/ShapeChangeConfiguration.xsd">
+	<input>
+		<parameter name="inputModelType" value="SCXML"/>
+		<parameter name="inputFile" value="src/test/resources/xsdutiltest/scxml_valid.xml"/>
+		<parameter name="appSchemaName" value="Test Schema"/>
+		<parameter name="publicOnly" value="true"/>
+		<parameter name="checkingConstraints" value="disabled"/>
+	</input>
+	<log>
+		<parameter name="reportLevel" value="WARN"/>
+		<parameter name="logFile" value="$logFile$"/>
+	</log>
+	<targets>
+		<Target class="de.interactive_instruments.shapechange.engine.customtarget.ClassNameListTarget" mode="enabled">
+			<targetParameter name="outputDirectory" value="$outputDir$"/>
+			<targetParameter name="outputFilename" value="classNames"/>
+			<targetParameter name="defaultEncodingRule" value="*"/>
+		</Target>
+	</targets>
+</ShapeChangeConfiguration>

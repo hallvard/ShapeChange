@@ -48,7 +48,7 @@ import de.interactive_instruments.shapechange.core.Converter;
 import de.interactive_instruments.shapechange.core.Options;
 import de.interactive_instruments.shapechange.core.ShapeChangeAbortException;
 import de.interactive_instruments.shapechange.core.ShapeChangeResult;
-import de.interactive_instruments.shapechange.core.target.xmlschema.XmlSchemaConstants;
+import de.interactive_instruments.shapechange.core.XmlSchemaConstants;
 
 public class DefaultDialog extends JFrame
                            implements ActionListener, Dialog {

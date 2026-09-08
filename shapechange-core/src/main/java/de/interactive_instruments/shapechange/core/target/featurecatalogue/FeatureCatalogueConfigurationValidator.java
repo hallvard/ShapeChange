@@ -31,6 +31,8 @@
  */
 package de.interactive_instruments.shapechange.core.target.featurecatalogue;
 
+import de.interactive_instruments.shapechange.core.util.StreamGobbler;
+
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
